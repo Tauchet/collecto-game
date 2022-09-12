@@ -7,7 +7,7 @@ class Color():
     def __repr__(self):
         return f"{self.symbol}"
 
-COLOR_EMPTY = Color('Vacío', ' ')
+COLOR_EMPTY = Color('Vacío', '*')
 COLORS = {
     'W': Color('Blanco', 'W'),
     'R': Color('Rojo', 'R'),

@@ -9,10 +9,10 @@ FAST_NEIGHBOURS = (
 )
 
 NEIGHBOURS = (
-    (0, -1),
-    (-1, 0),
-    (0, 1),
-    (1, 0)
+    (0, -1), # Arriba
+    (0, 1), # Abajo
+    (1, 0), # Derecha
+    (-1, 0), # Izquierda
 )
 
 class Board():
@@ -25,10 +25,13 @@ class Board():
             self.handle.append([COLOR_EMPTY] * 7)
         pass
 
+    def check_bounds(self, x: int, y: int):
+        return x >= 0 and x < self.size and y >= 0 and y < self.size
+
     def get_color(self, x: int, y: int) -> Color:
-        if x < 0 or y < 0 or x >= self.size or y >= self.size:
-            return None
-        return self.handle[y][x]
+        if self.check_bounds(x, y):
+            return self.handle[y][x]
+        return None
     
     def set_color(self, x: int, y: int, color: Color):
         self.handle[y][x] = color
@@ -53,13 +56,70 @@ class Board():
                         return (rx, ry, rcolor)
         return (x, y, color)
 
+    def get_first_empty(self, x_min: int, x_max: int, y_min: int, y_max: int):
+        position = None
+
+        for xf in range(x_min, x_max + 1):
+            for yf in range(y_min, y_max + 1):
+                if self.get_color(xf, yf) == COLOR_EMPTY:
+                    position = (xf, yf)
+                elif position:
+                    return position
+
+        return position
+
+    def move(self, x_min: int, x_max: int, y_min: int, y_max: int):
+        order = []
+
+        for xf in range(x_min, x_max + 1):
+            for yf in range(y_min, y_max + 1):
+                color = self.get_color(xf, yf)
+                if color == COLOR_EMPTY:
+                    order.insert(0, color)
+                else:
+                    order.append(color)
+
+        for xf in range(x_min, x_max + 1):
+            for yf in range(y_min, y_max + 1):
+                self.set_color(xf, yf, order.pop(0))
+
+    def calculate_directions_available(self, x: int, y: int):
+        directions = []
+        for direction in NEIGHBOURS:
+            (dx, dy) = direction
+            pos_x = dx + x
+            pos_y = dy + y
+
+            # Validar que sea una esquina o que tenga un espacio para mover con el dedo. 
+            if (not self.check_bounds(pos_x, pos_y)) or self.get_color(pos_x, pos_y) == COLOR_EMPTY:
+                (dcx, dcy) = get_direction_contrary(direction)
+                
+                temp_x = x + (dcx * (self.size - 1))
+                temp_y = y + (dcy * (self.size - 1))
+
+                x_min = min(x, temp_x)
+                x_max = max(x, temp_x)
+                y_min = min(y, temp_y)
+                y_max = max(y, temp_y)
+
+                first_empty = self.get_first_empty(x_min, x_max, y_min, y_max)
+                if first_empty != None:
+                    directions.append((direction, first_empty))
+        
+        return directions
+
     def print(self):
+        print("---------------------------------")
         for y in range(0, self.size):
             for x in range(0, self.size):
                 print(self.handle[y][x], end = " ")
             print("")
 
     pass
+
+def get_direction_contrary(direction):
+    (x, y) = direction
+    return (x * -1, y * -1)
 
 def get_color_whitout_repeat(board: Board, colors, x: int, y: int):
 
@@ -76,11 +136,12 @@ def get_color_whitout_repeat(board: Board, colors, x: int, y: int):
     # que seleccionó tiene un vecino con el mismo color
     if bug_last_color:
         (next_x, next_y, next_color) = board.get_secure_position(x, y, color)
-        print("ERROR", f"({x}, {y})", color, "->", f"({next_x}, {next_y})", next_color)
+        print("FORMULANDO", f"({x}, {y})", color, "->", f"({next_x}, {next_y})", next_color)
         board.set_color(next_x, next_y, color)
         color = next_color
 
     return color
+
 
 def random(size = 7):
 
@@ -92,8 +153,6 @@ def random(size = 7):
         for y in range(size):
             if x != instance.middle_pos or y != instance.middle_pos: 
                 instance.set_color(x, y, get_color_whitout_repeat(instance, colors, x, y))
-                continue 
-
-    instance.print()
+                continue
 
     return instance
