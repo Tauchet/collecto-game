@@ -12,6 +12,7 @@ class GameCellState(Enum):
     AVAILABLE = 1
     SELECTED = 2
 
+# Clase para el botón de movimiento
 class GameMovement():
 
     def __init__(self, parent, uid, image, default_image, row, column, on_click):
@@ -38,6 +39,7 @@ class GameMovement():
             self.handle['image'] = self.default_image
 
 
+# Clase para la representación de la celda del tablero
 class GameCell():
 
     def __init__(self, main_window, x, y, on_click):

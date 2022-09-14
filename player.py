@@ -1,5 +1,6 @@
 from math import floor
 
+# Clase para el control de los datos de un jugador
 class Player():
 
     def __init__(self, name):
@@ -8,6 +9,8 @@ class Player():
         self.points = {}
         self.total_points = 0
 
+    # Función para agregar y actualziar los puntos totales obtenidos por
+    # los colores agrupados encontrados en el tablero
     def add_points(self, points):
         
         for (color, p) in points.items():

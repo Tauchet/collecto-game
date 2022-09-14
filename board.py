@@ -100,7 +100,7 @@ class Board():
 
         first_iteration_executed = False
         inverse_empty = False
-        emptys = 0
+        emptys = []
 
         for xf in range(cube.x_min, cube.x_max + 1):
             for yf in range(cube.y_min, cube.y_max + 1):
@@ -112,7 +112,7 @@ class Board():
                     inverse_empty = True
 
                 if color == COLOR_EMPTY:
-                    emptys = emptys + 1
+                    emptys.append(color)
                 else:
                     order.append(color)
 
@@ -121,9 +121,9 @@ class Board():
         print(order)
 
         if inverse_empty:
-            order = order + ([COLOR_EMPTY] * emptys)
+            order = order + emptys
         else:
-            order = ([COLOR_EMPTY] * emptys) + order
+            order = emptys + order
 
         for xf in range(cube.x_min, cube.x_max + 1):
             for yf in range(cube.y_min, cube.y_max + 1):

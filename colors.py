@@ -1,3 +1,4 @@
+# Clase para controlar los colores
 class Color():
 
     def __init__(self, name, symbol, ball_image_url):
@@ -8,7 +9,8 @@ class Color():
     def __repr__(self):
         return f"{self.symbol}"
 
-COLOR_EMPTY = 'E'
+# Constantes de colores
+COLOR_EMPTY = None
 COLOR_WHITE = Color('Blanco', 'W', 'white_ball.png')
 COLOR_RED = Color('Rojo', 'R', 'red_ball.png')
 COLOR_YELLOW = Color('Amarillo', 'Y', 'yellow_ball.png')

@@ -1,3 +1,5 @@
+
+# Clase para controlar las direcciones
 class Direction():
 
     def __init__(self, uid, name, mov_x, mov_y):
@@ -12,6 +14,8 @@ class Direction():
     def __repr__(self) -> str:
         return f"Direction[{self.name}, {self.mov_x}, {self.mov_y}]"
 
+# Clase para controlar las sub-matrices generadas desde una posición pos1 a pos2
+# obteniendo el menor y el mayor de x e y
 class Cube():
 
     def __init__(self, ax, ay, bx, by):
@@ -23,6 +27,7 @@ class Cube():
     def __repr__(self) -> str:
         return f"Cube[{self.x_min},{self.y_min},{self.x_max},{self.y_max}]"
 
+# Constantes y direcciones únicas
 DIRECTION_UP = Direction(0, 'UP', 0, -1)
 DIRECTION_DOWN = Direction(1, 'DOWN', 0, 1)
 DIRECTION_LEFT = Direction(2, 'LEFT', -1, 0)
@@ -30,7 +35,10 @@ DIRECTION_RIGHT = Direction(3, 'RIGHT', 1, 0)
 DIRECTIONS = (DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT)
 CONTRARY_DIRECTIONS = (DIRECTION_DOWN, DIRECTION_UP, DIRECTION_RIGHT, DIRECTION_LEFT)
 
+# Vecinos
 NEIGHBOURS = DIRECTIONS
+
+# Vecinos rápidos para un recorrido simple (ARRIBA, IZQUIERDA)
 FAST_NEIGHBOURS = (DIRECTION_UP, DIRECTION_LEFT)
 
 def get_cube_from(a, b):
