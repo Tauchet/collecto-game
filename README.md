@@ -5,8 +5,9 @@ Juego de mesa basandose en:
 
 ## Implementaciones:
   - Generador de tableros aleatorios
-  - Selector de cantidad de jugadores [2-4]
+  - Selector de cantidad de jugadores [2]
   - Interfaz de Juego
 
 ## Dependencias:
-  - Ninguna
+  - Pillow
+  - tkinter

@@ -1,6 +1,5 @@
 from enum import Enum
 import tkinter as tk
-from xmlrpc.client import Boolean
 from PIL import Image, ImageTk
 
 from colors import Color

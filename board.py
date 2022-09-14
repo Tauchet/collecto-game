@@ -1,9 +1,8 @@
-from cmath import sqrt
-from math import dist, floor
+from math import floor
 from colors import COLOR_EMPTY, COLORS, Color
 
 import random as rnd
-from locations import DIRECTION_LEFT, FAST_NEIGHBOURS, NEIGHBOURS, Cube, Direction
+from locations import FAST_NEIGHBOURS, NEIGHBOURS, Cube, Direction
 
 from utils import create_matrix
 

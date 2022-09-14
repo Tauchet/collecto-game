@@ -1,7 +1,6 @@
 from cgitb import text
 import tkinter as tk
 from tkinter import messagebox
-from turtle import color
 from PIL import Image
 
 import board
